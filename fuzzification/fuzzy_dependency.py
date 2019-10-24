@@ -46,74 +46,54 @@ light_greenred = fuzz.trapmf(light, query_fuzzy_individual_values(df_fuzzy_value
 
 # distance dependency
 def distance_near_dependency(distance):
-    print("this is dist:", distance)
     x = fuzz.interp_membership(dist, dist_near, distance)
-    print("this is x:", x)
     return x
 
 
 def distance_medium_dependency(distance):
-    print("this is dist:", distance)
     x = fuzz.interp_membership(dist, dist_med, distance)
-    print("this is x:", x)
     return x
 
 
 def distance_far_dependency(distance):
-    print("this is dist:", distance)
     x = fuzz.interp_membership(dist, dist_far, distance)
-    print("this is x:", x)
     return x
 
 
 # angle dependency
 def angle_small_dependency(angle):
-    print("this is angle:", angle)
     y = fuzz.interp_membership(ang, ang_small, angle)
-    print("this is y:", y)
     return y
 
 
 def angle_medium_dependency(angle):
-    print("this is angle:", angle)
     y = fuzz.interp_membership(ang, ang_med, angle)
-    print("this is y:", y)
     return y
 
 
 def angle_big_dependency(angle):
-    print("this is angle:", angle)
     y = fuzz.interp_membership(ang, ang_big, angle)
-    print("this is y:", y)
     return y
 
 
 # lamp dependency
 def lamp_red_dependency(time):
-    print("this is time:", time)
     z = fuzz.interp_membership(light, light_red, time)
-    print("this is z:", z)
     return z
 
 
 def lamp_less_red_dependency(time):
-    print("this is time:", time)
     z = fuzz.interp_membership(light, light_redgreen, time)
-    print("this is z:", z)
     return z
 
 
 def lamp_less_green_dependency(time):
-    print("this is time:", time)
     z = fuzz.interp_membership(light, light_greenred, time)
-    print("this is z:", z)
     return z
 
 
 def lamp_green_dependency(time):
-    print("this is time:", time)
     z = fuzz.interp_membership(light, light_green, time)
-    print("this is z:", z)
     return z
 
 
