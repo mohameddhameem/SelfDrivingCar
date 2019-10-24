@@ -1,5 +1,5 @@
 import xlrd
-
+import pandas as pd
 
 def read_light_rule():
     light_rule = []
@@ -30,3 +30,22 @@ def read_impediment_rule():
             impediment_rule.append((distance[i].strip(), angle[i].strip(), speed[i].strip()))
 
     return impediment_rule
+
+def read_fuzzy_initial_values():
+    df = pd.read_excel('../rule/fuzzy_rule.xlsx', sheet_name='fuzzy_values_initalize')
+    return df
+
+def read_fuzzy_values():
+    df = pd.read_excel('../rule/fuzzy_rule.xlsx', sheet_name='fuzzy_values')
+    return df
+
+def query_fuzzy_individual_values(df_base, query, required_cols = 4):
+    df = df_base[(df_base.rule == query)]
+    if(required_cols==3):
+        return df['a'].iloc[0], df['b'].iloc[0], df['c'].iloc[0]
+    else:
+        return df['a'].iloc[0], df['b'].iloc[0], df['c'].iloc[0], df['d'].iloc[0]
+
+def query_fuzzy_values(df_base, query):
+    df = df_base[(df_base.rule == query)]
+    return df['start'].iloc[0], df['stop'].iloc[0], df['step'].iloc[0]

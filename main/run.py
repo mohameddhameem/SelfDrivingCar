@@ -1,5 +1,6 @@
 import random
 import sys
+import time
 
 import graphic.camera as camera
 import graphic.maps as maps
@@ -11,6 +12,46 @@ from pygame.locals import *
 from graphic import car
 from graphic.car import calculate_angle
 
+
+#####
+def make_font(fonts, size):
+    available = pygame.font.get_fonts()
+    # get_fonts() returns a list of lowercase spaceless font names
+    choices = map(lambda x: x.lower().replace(' ', ''), fonts)
+    for choice in choices:
+        if choice in available:
+            return pygame.font.SysFont(choice, size)
+    return pygame.font.Font(None, size)
+
+
+_cached_fonts = {}
+
+
+def get_font(font_preferences, size):
+    global _cached_fonts
+    key = str(font_preferences) + '|' + str(size)
+    font = _cached_fonts.get(key, None)
+    if font == None:
+        font = make_font(font_preferences, size)
+        _cached_fonts[key] = font
+    return font
+
+
+_cached_text = {}
+
+
+def create_text(text, fonts, size, color):
+    global _cached_text
+    key = '|'.join(map(str, (fonts, size, color, text)))
+    image = _cached_text.get(key, None)
+    if image == None:
+        font = get_font(fonts, size)
+        image = font.render(text, True, color)
+        _cached_text[key] = image
+    return image
+
+
+#########
 
 def main():
     clock = pygame.time.Clock()
@@ -33,6 +74,7 @@ def main():
     traffic_lamp1 = traffic_lamp.TrafficLamp(maps.TRAFFIC_LAMP_COORDINATES[0])
     traffic_lamp2 = traffic_lamp.TrafficLamp(maps.TRAFFIC_LAMP_COORDINATES[1])
 
+    print('________')
     print(maps.TRAFFIC_LAMP_COORDINATES[0])
     print(maps.TRAFFIC_LAMP_COORDINATES[1])
 
@@ -56,6 +98,9 @@ def main():
 
     cam.set_pos(controlled_car.x, controlled_car.y)
     flag = 0
+
+    ##
+    start = pygame.time.get_ticks()
 
     while running:
         flag += 1
@@ -121,6 +166,33 @@ def main():
         # update and render car
         cars.update(cam.x, cam.y, traffic_lamps_status, stone_status, flag)
         cars.draw(screen)
+
+        ##### Add for timer ~~~
+
+        font_preferences = [
+            "Bizarre-Ass Font Sans Serif",
+            "They definitely dont have this installed Gothic",
+            "Papyrus",
+            "Comic Sans MS"]
+
+        counting_time = pygame.time.get_ticks() - start
+
+        # change milliseconds into minutes, seconds, milliseconds
+        counting_minutes = str(int(counting_time / 60000)).zfill(2)
+        counting_seconds = str(int((counting_time % 60000) / 1000)).zfill(2)
+
+        counting_string = "%s:%s" % (counting_minutes, counting_seconds)
+
+        counting_text = font.render(str(counting_string), 1, (0, 0, 0))
+
+        font_preferences = ["Comic Sans MS"]
+
+        text = create_text(str(counting_string), font_preferences, 72, (0, 0, 0))
+
+        screen.blit(text, (500, 0))
+        text_stats = create_text('Hello World', font_preferences, 50, (0,0,0))
+        screen.blit(text_stats, (250,0))
+        ######
 
         pygame.display.flip()
 

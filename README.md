@@ -1,10 +1,10 @@
 # Self Driving Car - Fuzzy Logic
 
-This is a project of subject IT4844 at Hanoi University of Science and Technology (HUST)
+To Do
 
 ### Prerequisites
 
-This project is writen with **PyCharm IDE**, you can open it with Pycharm (or any other python IDE)
+To Do
 
 You need install python 3 for run this project. Moreover, you need install libraries:
 * [Pygame] (https://www.pygame.org/news)
@@ -33,3 +33,6 @@ sudo pip3 install pygame
 the third parameter in (0, 0, 1) is the ordinal number of map, you can change 1 by 2, 3 for any other map.
 
 - Add or remove obstacle on click
+
+## Original Code
+We have used original code from https://github.com/HoangNguyenHuu/fuzzy-logic-project
