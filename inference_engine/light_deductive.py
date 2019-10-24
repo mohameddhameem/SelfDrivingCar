@@ -1,5 +1,3 @@
-import numpy as np
-import skfuzzy as fuzz
 from fuzzification.fuzzy_dependency import *
 from fuzzy_rule_base.read_rule import *
 

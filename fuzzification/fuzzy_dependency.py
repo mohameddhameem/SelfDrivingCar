@@ -1,7 +1,8 @@
-import math
-import skfuzzy as fuzz
 import numpy as np
-from fuzzy_rule_base.read_rule import read_fuzzy_initial_values, read_fuzzy_values, query_fuzzy_individual_values , query_fuzzy_values
+import skfuzzy as fuzz
+
+from fuzzy_rule_base.read_rule import read_fuzzy_initial_values, read_fuzzy_values, query_fuzzy_individual_values, \
+    query_fuzzy_values
 
 DISTANCE_NEAR = "Near"
 DISTANCE_MEDIUM = "Medium"

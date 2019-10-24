@@ -1,14 +1,13 @@
 import random
 import sys
-import time
+
+import pygame
+from pygame.locals import *
 
 import graphic.camera as camera
 import graphic.maps as maps
-import pygame
 import graphic.stone as stone
 import graphic.traffic_lamp as traffic_lamp
-from pygame.locals import *
-
 from graphic import car
 from graphic.car import calculate_angle
 

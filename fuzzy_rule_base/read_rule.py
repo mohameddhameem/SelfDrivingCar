@@ -1,5 +1,6 @@
-import xlrd
 import pandas as pd
+import xlrd
+
 
 def read_light_rule():
     light_rule = []
