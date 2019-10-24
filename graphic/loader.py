@@ -1,13 +1,14 @@
-import os
-
+from pathlib import Path
 import pygame
 from pygame.locals import *
 
 
 def load_image(file, transparent=True):
-    # print("Loading " + file + " ..")
-    fullname = os.path.join("../media", file)
-    image = pygame.image.load(fullname)
+    data_folder = Path("media")
+    file_to_open = data_folder / file
+
+    image = pygame.image.load(str(file_to_open))
+
     if transparent == True:
         image = image.convert()
         colorkey = image.get_at((0, 0))

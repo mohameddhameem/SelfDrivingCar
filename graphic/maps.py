@@ -1,6 +1,6 @@
 import pygame
 import xlrd
-
+from pathlib import Path
 from graphic.loader import load_image
 
 # Map filenames.
@@ -28,8 +28,13 @@ class Map(pygame.sprite.Sprite):
     def update(self, cam_x, cam_y):
         self.rect.topleft = self.x - cam_x + 600, self.y - cam_y + 300
 
+    def get_workbook(self):
+        data_folder = Path("media")
+        file_to_open = data_folder / 'toa-do.xlsx' # '../media/toa-do.xlsx'
+        return file_to_open
+
     def get_map_navs(self):
-        with xlrd.open_workbook('../media/toa-do.xlsx') as book:
+        with xlrd.open_workbook(self.get_workbook()) as book:
             sheet = book.sheet_by_index(self.map_number - 1)
 
             x_coordinate = [x for x in sheet.col_values(1)]

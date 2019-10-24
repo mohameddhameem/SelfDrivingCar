@@ -1,10 +1,16 @@
 import pandas as pd
 import xlrd
+from pathlib import Path
 
+def get_workbook():
+    data_folder = Path("rule")
+    file_to_open = data_folder / 'fuzzy_rule.xlsx' # '../rule/fuzzy_rule.xlsx'
+    return file_to_open
 
 def read_light_rule():
     light_rule = []
-    with xlrd.open_workbook('../rule/fuzzy_rule.xlsx') as book:
+    
+    with xlrd.open_workbook(get_workbook()) as book:
         sheet = book.sheet_by_index(1)
 
         distance = [x for x in sheet.col_values(1)]
@@ -20,7 +26,7 @@ def read_light_rule():
 
 def read_impediment_rule():
     impediment_rule = []
-    with xlrd.open_workbook('../rule/fuzzy_rule.xlsx') as book:
+    with xlrd.open_workbook(get_workbook()) as book:
         sheet = book.sheet_by_index(0)
 
         distance = [x for x in sheet.col_values(1)]
@@ -33,11 +39,11 @@ def read_impediment_rule():
     return impediment_rule
 
 def read_fuzzy_initial_values():
-    df = pd.read_excel('../rule/fuzzy_rule.xlsx', sheet_name='fuzzy_values_initalize')
+    df = pd.read_excel(get_workbook(), sheet_name='fuzzy_values_initalize')
     return df
 
 def read_fuzzy_values():
-    df = pd.read_excel('../rule/fuzzy_rule.xlsx', sheet_name='fuzzy_values')
+    df = pd.read_excel(get_workbook(), sheet_name='fuzzy_values')
     return df
 
 def query_fuzzy_individual_values(df_base, query, required_cols = 4):

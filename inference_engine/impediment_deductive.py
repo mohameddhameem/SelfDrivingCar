@@ -1,17 +1,58 @@
-from defuzzification.speed_calculator import calculate_speed
-from fuzzification.fuzzy_dependency import cal_angle_dependencies, cal_distance_dependencies
-from fuzzy_rule_base.read_rule import read_impediment_rule
+from fuzzification.fuzzy_dependency import *
+from fuzzy_rule_base.read_rule import *
 
+import numpy as np
+import skfuzzy as fuzz
 
 class ImpedimentDeductive:
     def __init__(self):
         self.rules = read_impediment_rule()
+        df_initial_values = read_fuzzy_initial_values()
+        df_fuzzy_values = read_fuzzy_values()
+
+        start, stop, step = query_fuzzy_values(df_initial_values, 'speedo')
+        self.speedo = np.arange(start, stop, step)
+        self.stop   = fuzz.trimf(self.speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_stop', required_cols=3))
+        self.slow   = fuzz.trimf(self.speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slow', required_cols=3))
+        self.slower = fuzz.trimf(self.speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slower', required_cols=3))
+        self.fast   = fuzz.trapmf(self.speedo,query_fuzzy_individual_values(df_fuzzy_values, 'speedo_fast'))
 
     def find_light_rule(self, distance_dependency, angle_dependency):
         for rule in self.rules:
             if distance_dependency[0] == rule[0] and angle_dependency[0] == rule[1]:
                 return [distance_dependency, angle_dependency, rule[2]]
         return None
+
+    def speed_type(speedvalue, speedtype): 
+        if speedtype == "Fast": 
+            new_arg = fuzz.interp_universe(speedo, fast, speedvalue)[-1]
+            tip_fast = np.fmin(fast, new_arg)
+            try:
+                res = fuzz.defuzz(speedo, tip_fast, 'centroid')
+            except:
+                return new_arg, 0
+        elif speedtype == "Slower":
+            new_arg = fuzz.interp_universe(speedo, slower, speedvalue)[-1]
+            tip_slower = np.fmin(slower, new_arg)
+            try:
+                res = fuzz.defuzz(speedo, tip_slower, 'centroid')
+            except:
+                return new_arg, 0
+        elif speedtype == "Slow": 
+            new_arg = fuzz.interp_universe(speedo, slow, speedvalue)[-1]
+            tip_slow = np.fmin(slow, new_arg)
+            try:
+                res = fuzz.defuzz(speedo, tip_slow, 'centroid')
+            except:
+                return new_arg, 0
+        elif speedtype == "Stop": 
+            new_arg = fuzz.interp_universe(speedo, stop, speedvalue)[-1]
+            tip_stop = np.fmin(stop, new_arg)
+            try:
+                res = fuzz.defuzz(speedo, tip_stop, 'centroid')
+            except:
+                return new_arg, 0
+        return new_arg, res
 
     # calculate arguments for integral function
     def cal_function_arguments(self, distance_dependency, angle_dependency):
@@ -21,28 +62,8 @@ class ImpedimentDeductive:
                 min_arg = min(dependencies)
                 label = rule[2]
                 new_arguments = []
-                if label == "Fast":
-                    if min_arg == 1:
-                        new_arguments.append(1.5)
-                    elif 0 < min_arg < 1:
-                        new_arguments.append(0.5 * min_arg + 1)
-                if label == "Slower":
-                    if min_arg == 1:
-                        new_arguments.append(1)
-                    elif 0 < min_arg < 1:
-                        new_arguments.append(0.5 * min_arg + 0.5)
-                        new_arguments.append(1.5 - 0.5 * min_arg)
-                if label == "Slow":
-                    if min_arg == 1:
-                        new_arguments.append(0.5)
-                    elif 0 < min_arg < 1:
-                        new_arguments.append(0.5 * min_arg)
-                        new_arguments.append(1 - 0.5 * min_arg)
-                if label == "Stop":
-                    if min_arg == 1:
-                        new_arguments.append(0)
-                    elif 0 < min_arg < 1:
-                        new_arguments.append(0.01 - 0.01 * min_arg)
+                new_arg_1, res_1 = self.speed_type(min_arg, label)
+                new_arguments.append(new_arg_1)
                 return [new_arguments, label, min_arg]
 
         return [0, "Stop", 1]
@@ -54,18 +75,10 @@ class ImpedimentDeductive:
         weight_total = 0
         for distance_dependency in distance_dependencies:
             for angle_dependency in angle_dependencies:
-                # dis_label = distance_dependency[0]
-                # lig_label = light_dependency[0]
-                # ang_label = angle_dependency[0]
-                # rule_found = self.find_light_rule(distance_dependency, light_dependency, angle_dependency)
-                # print("Rule found: ", rule_found)
-                arguments_func = self.cal_function_arguments(distance_dependency, angle_dependency)
-                # print("Argument function: ", arguments_func)
-                speed, weight = calculate_speed(arguments_func)
-                # print("Integrate: ", integrate)
+                arguments_func, speed = self.cal_function_arguments(distance_dependency, light_dependency, angle_dependency)
+                weight = arguments_func[2]
                 speed_total += speed * weight
                 weight_total += weight
-                # print()
 
         speed_average = round(speed_total / weight_total, 2)
         return speed_average
