@@ -62,6 +62,8 @@ class ImpedimentDeductive:
                 min_arg = min(dependencies)
                 label = rule[2]
                 new_arguments = []
+                print("label ")
+                print(label)
                 new_arg_1, res_1 = self.speed_type(min_arg, label)
                 new_arguments.append(new_arg_1)
                 return [new_arguments, label, min_arg]
@@ -75,7 +77,7 @@ class ImpedimentDeductive:
         weight_total = 0
         for distance_dependency in distance_dependencies:
             for angle_dependency in angle_dependencies:
-                arguments_func, speed = self.cal_function_arguments(distance_dependency, light_dependency, angle_dependency)
+                arguments_func, speed = self.cal_function_arguments(distance_dependency, angle_dependency)
                 weight = arguments_func[2]
                 speed_total += speed * weight
                 weight_total += weight

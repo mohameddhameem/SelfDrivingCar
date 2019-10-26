@@ -1,6 +1,7 @@
 import numpy as np
 import skfuzzy as fuzz
-
+import sys
+sys.path.insert(0, 'D:\\school\\Computational Intelligence II\\tian jing ca\\SelfDrivingCar')
 from fuzzy_rule_base.read_rule import read_fuzzy_initial_values, read_fuzzy_values, query_fuzzy_individual_values, \
     query_fuzzy_values
 
