@@ -22,7 +22,12 @@ pip install -r requirements.txt
 
 - Membership function values can be updated in the rule/fuzzy_rule.xlsx file. 
 
-- Add or remove obstacle on click
+- Update other values with in the fuzzification/fuzzy_dependency.py for further customization
+
+## Creators
+Please check contributors section.
+
+
 
 ## Original Code
 We have used original code from https://github.com/HoangNguyenHuu/fuzzy-logic-project
