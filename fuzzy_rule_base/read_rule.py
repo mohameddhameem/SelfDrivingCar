@@ -3,7 +3,7 @@ import xlrd
 from pathlib import Path
 
 def get_workbook():
-    data_folder = Path("rule")
+    data_folder = Path("../rule")
     file_to_open = data_folder / 'fuzzy_rule.xlsx' # '../rule/fuzzy_rule.xlsx'
     return file_to_open
 

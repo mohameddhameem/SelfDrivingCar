@@ -41,8 +41,7 @@ class Car(pygame.sprite.Sprite):
     # init_x, init_y: center of image
     def __init__(self, init_x, init_y, init_dir):
         pygame.sprite.Sprite.__init__(self)
-        #self.image = load_image("car_player.png")
-        self.image = load_image("car_bean.png")
+        self.image = load_image("car_player.png")
         self.rect = self.image.get_rect()
         self.rect_w = self.rect.size[0]
         self.rect_h = self.rect.size[1]

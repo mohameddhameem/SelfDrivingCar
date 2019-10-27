@@ -4,7 +4,7 @@ from pygame.locals import *
 
 
 def load_image(file, transparent=True):
-    data_folder = Path("media")
+    data_folder = Path("../media")
     file_to_open = data_folder / file
 
     image = pygame.image.load(str(file_to_open))
