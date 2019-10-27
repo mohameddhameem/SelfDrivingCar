@@ -1,36 +1,26 @@
 # Self Driving Car - Fuzzy Logic
 
-To Do
+Fuzzy implementation of self driving car. The project is created with pygame, which have the capability to react to road situations and adjust its speed accordingly. The road situation can be implemented real time i.e put a rock in the middle of the game when the car is driving to test if the car stops.
 
 ### Prerequisites
 
-To Do
+Create python virtual environment. Download this github repository.
 
-You need install python 3 for run this project. Moreover, you need install libraries:
-* [Pygame] (https://www.pygame.org/news)
-* [Scipy] (https://www.scipy.org/)
-* [xlrd] (https://pypi.python.org/pypi/xlrd)
+From the terminal run below command
 
 ```
-In Ubuntu, you can install this by command line (before this, you need to install python 3 and pip3):
+pip install -r requirements.txt
 
-sudo pip3 install scipy
-
-sudo pip3 install xlrd
-
-sudo pip3 install pygame
-
-
-
-(Sometimes it may not work (especially the Pygame library), maybe you need some other libraries! You can google to know how to install these packages)
+(tested with Python version 3.7.2 )
 ```
 
 ## Run this project
 
 - Run file **run.py** in package **main**
 
-- You can change to any other map by change line 27 in file **run.py**: "map_s.add(maps.Map(0, 0, 1))" -
-the third parameter in (0, 0, 1) is the ordinal number of map, you can change 1 by 2, 3 for any other map.
+![Self driving car demo](media/Self Driving Car Demo.gif)
+
+- Membership function values can be updated in the rule/fuzzy_rule.xlsx file. 
 
 - Add or remove obstacle on click
 
