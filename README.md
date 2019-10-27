@@ -13,12 +13,13 @@ pip install -r requirements.txt
 
 (tested with Python version 3.7.2 )
 ```
+### Demo
+
+![Self driving car demo](https://github.com/mohameddhameem/SelfDrivingCar/blob/master/media/Self%20Driving%20Car%20Demo.gif)
 
 ## Run this project
 
 - Run file **run.py** in package **main**
-
-![Self driving car demo](media/Self Driving Car Demo.gif)
 
 - Membership function values can be updated in the rule/fuzzy_rule.xlsx file. 
 
