@@ -2,6 +2,7 @@ from fuzzification.fuzzy_dependency import *
 from fuzzy_rule_base.read_rule import *
 
 import numpy as np
+import matplotlib.pyplot as plt
 import skfuzzy as fuzz
 
 class ImpedimentDeductive:
@@ -16,6 +17,20 @@ class ImpedimentDeductive:
         self.slow   = fuzz.trimf(self.speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slow', required_cols=3))
         self.slower = fuzz.trimf(self.speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slower', required_cols=3))
         self.fast   = fuzz.trapmf(self.speedo,query_fuzzy_individual_values(df_fuzzy_values, 'speedo_fast'))
+        
+        # Visualize these universes and membership functions
+        fig, (ax0) = plt.subplots(nrows=1)
+        ax0.plot(self.speedo, self.stop, 'r', linewidth=1.5, label='Stop')
+        ax0.plot(self.speedo, self.slow, 'y', linewidth=1.5, label='Slow')
+        ax0.plot(self.speedo, self.slower, 'tab:orange', linewidth=1.5, label='Slower')
+        ax0.plot(self.speedo, self.fast, 'g', linewidth=1.5, label='Fast')
+        ax0.set_title('Speed')
+        ax0.legend()
+        ax0.spines['top'].set_visible(False)
+        ax0.spines['right'].set_visible(False)
+        ax0.get_xaxis().tick_bottom()
+        ax0.get_yaxis().tick_left()
+        plt.savefig('foo.png', bbox_inches='tight')
 
     def find_light_rule(self, distance_dependency, angle_dependency):
         for rule in self.rules:

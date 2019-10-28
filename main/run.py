@@ -1,6 +1,6 @@
 import random
 import sys
-
+sys.path.insert(0, 'D:\\school\\Computational Intelligence II\\tian jing ca\\SelfDrivingCar')
 import pygame
 from pygame.locals import *
 
