@@ -1,17 +1,6 @@
 from fuzzification.fuzzy_dependency import *
 from fuzzy_rule_base.read_rule import *
 
-# df_initial_values = read_fuzzy_initial_values()
-# df_fuzzy_values = read_fuzzy_values()
-
-# start, stop, step = query_fuzzy_values(df_initial_values, 'speedo')
-# speedo = np.arange(start, stop, step)
-# #print(df_fuzzy_values)
-# stop   = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_stop', required_cols=3))
-# slow   = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slow', required_cols=3))
-# slower = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slower', required_cols=3))
-# fast   = fuzz.trapmf(speedo,query_fuzzy_individual_values(df_fuzzy_values, 'speedo_fast'))
-
 def speed_type(speedvalue, speedtype, speedo, fast, slower, slow, stop):
     if speedtype == "Fast":
         new_arg = fuzz.interp_universe(speedo, fast, speedvalue)[-1]
@@ -55,14 +44,6 @@ class LightDeductive:
 
     # calculate arguments for integral function
     def cal_function_arguments(self, distance_dependency, light_dependency, angle_dependency, speedo, fast, slower, slow, stop):
-        # df_initial_values = read_fuzzy_initial_values()
-        # df_fuzzy_values = read_fuzzy_values()
-        # start, stop, step = query_fuzzy_values(df_initial_values, 'speedo')
-        # speedo = np.arange(start, stop, step)
-        # stop   = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_stop', required_cols=3))
-        # slow   = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slow', required_cols=3))
-        # slower = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slower', required_cols=3))
-        # fast   = fuzz.trapmf(speedo,query_fuzzy_individual_values(df_fuzzy_values, 'speedo_fast'))
         for rule in self.rules:
             if distance_dependency[0] == rule[0] and light_dependency[0] == rule[1] and angle_dependency[0] == rule[2]:
                 dependencies = [distance_dependency[1], light_dependency[1], angle_dependency[1]]

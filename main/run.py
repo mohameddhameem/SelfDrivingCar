@@ -8,19 +8,7 @@ import pandas as pd
 import numpy as np
 from openpyxl import load_workbook
 from pathlib import Path
-#sys.path.append('../')
 
-#import sys
-#import pygame
-#import time
-# import graphic.camera as camera
-# import graphic.maps as maps
-# import graphic.stone as stone
-# import graphic.traffic_lamp as traffic_lamp
-#from graphic import car
-#from graphic.car import calculate_angle
-
-#####
 def make_font(fonts, size):
     available = pygame.font.get_fonts()
     # get_fonts() returns a list of lowercase spaceless font names
@@ -32,7 +20,6 @@ def make_font(fonts, size):
 
 
 _cached_fonts = {}
-
 
 def get_font(font_preferences, size):
     global _cached_fonts
@@ -57,9 +44,6 @@ def create_text(text, fonts, size, color):
         _cached_text[key] = image
     return image
 
-
-#########
-
 def main(screen, background, font, CENTER_W, CENTER_H):
 
     import graphic.camera as camera
@@ -74,9 +58,6 @@ def main(screen, background, font, CENTER_W, CENTER_H):
 
     cam = camera.Camera()
 
-    # traffic_lamp1 = traffic_lamp.TrafficLamp(1610, 420, 90, 0)
-    # traffic_lamp2 = traffic_lamp.TrafficLamp(2710, 1520, 90, 1)
-
     stone_impediment = stone.Stone(200, 200, 90, 0)
 
     map_s = pygame.sprite.Group()
@@ -89,14 +70,11 @@ def main(screen, background, font, CENTER_W, CENTER_H):
     traffic_lamp1 = traffic_lamp.TrafficLamp(maps.TRAFFIC_LAMP_COORDINATES[0])
     traffic_lamp2 = traffic_lamp.TrafficLamp(maps.TRAFFIC_LAMP_COORDINATES[1])
 
-    print('________')
     print(maps.TRAFFIC_LAMP_COORDINATES[0])
     print(maps.TRAFFIC_LAMP_COORDINATES[1])
 
     start_angle = calculate_angle(maps.MAP_NAVS[0][0],
                                   maps.MAP_NAVS[0][1], maps.MAP_NAVS[1][0], maps.MAP_NAVS[1][1])
-    # print("Start angle: ", start_angle)
-    # print("Finish index: ", maps.FINISH_INDEX)
 
     controlled_car = car.Car(start_x, start_y, start_angle)
     cars = pygame.sprite.Group()
@@ -114,7 +92,6 @@ def main(screen, background, font, CENTER_W, CENTER_H):
     cam.set_pos(controlled_car.x, controlled_car.y)
     flag = 0
 
-    ##
     start = pygame.time.get_ticks()
 
     while running:
@@ -153,14 +130,12 @@ def main(screen, background, font, CENTER_W, CENTER_H):
         stones.update(cam.x, cam.y)
         stones.draw(screen)
 
-        # for lamp in traffic_lamps:
-        #     lamp_status = lamp.render(screen)
-        #     traffic_lamps_status.append(lamp_status)
         lamp_status1 = traffic_lamp1.render(screen)
         lamp_status2 = traffic_lamp2.render(screen)
 
         traffic_lamps_status.append(lamp_status1)
         traffic_lamps_status.append(lamp_status2)
+
         # update and render car
         cars.update(cam.x, cam.y, traffic_lamps_status, stone_status, flag)
         cars.draw(screen)
@@ -314,29 +289,6 @@ def simulate(params):
         except:
             return 10000
 
-    # main loop
-    # try: 
-    #     pygame.init()
-    #     screen = pygame.display.set_mode((1200, 600))
-    #     pygame.display.set_caption("Self Driving Car")
-    #     pygame.mouse.set_visible(True)
-    #     font = pygame.font.Font(None, 24)
-    #     CENTER_W = int(pygame.display.Info().current_w / 2)
-    #     CENTER_H = int(pygame.display.Info().current_h / 2)
-    #     background = pygame.Surface(screen.get_size())
-    #     background = background.convert_alpha(background)
-    #     background.fill((82, 86, 94))
-    #     travel_time = main(screen, background, font, CENTER_W, CENTER_H)
-    #     pygame.quit()
-    #     return travel_time
-    # except:
-    #     print("Something Error...")
-    #     try: 
-    #         pygame.quit()
-    #         return 10000
-    #     except:   
-    #         return 10000
-
 def de(fobj, bounds, mut=0.8, crossp=0.7, popsize=20, its=1000):
     dimensions = len(bounds)
     pop = np.random.rand(popsize, dimensions)
@@ -368,92 +320,6 @@ def de(fobj, bounds, mut=0.8, crossp=0.7, popsize=20, its=1000):
 
 if __name__ == '__main__':
 
-    # it = list(de(lambda x: x**2, bounds=[(-100, 100)]))
-    # print(it[-1])
-
-    # pygame.init()
-    # screen = pygame.display.set_mode((1200, 600))
-    # pygame.display.set_caption("Self Driving Car")
-    # pygame.mouse.set_visible(True)
-    # font = pygame.font.Font(None, 24)
-
-    # CENTER_W = int(pygame.display.Info().current_w / 2)
-    # CENTER_H = int(pygame.display.Info().current_h / 2)
-
-    # # new background surface
-    # background = pygame.Surface(screen.get_size())
-    # background = background.convert_alpha(background)
-    # background.fill((82, 86, 94))
-    
-    # This is a test to show that it works. Please uncomment this block and comment out anything below this block
-    # travel_time = simulate([20, 90, 150, 15, 30, 85, 2, 7, 3, 5, 0.05, 0.8, 1.3, 1.77])
-    # print(travel_time)
-    # travel_time = simulate([70, 140, 210, 7, 14, 21, 3, 6, 3, 6, 0.01, 0.5, 1, 1.5])
-    # print(travel_time)
-    # travel_time = simulate([94, 132, 149, 10, 77, 138, 9, 13, 0, 13, 1.75, 1.27, 1.41, 1.93]) # very funny
-    # print(travel_time)
-    
-
     bounds_value = [(0, 150), (0, 150), (0, 150), (0, 360), (0, 360), (0, 360), (0, 21), (0, 21), (0, 21), (0, 21),  (0, 2), (0, 2), (0, 2), (0, 2)]
     listfinal = list(de(simulate, bounds_value, popsize = 3000, its = 2))
     print(listfinal)
-
-    # pop_size = 1000
-    # its = 1
-    # dimensions = len(bounds_value)
-    # pop = np.random.rand(pop_size, dimensions)
-    # min_b, max_b = np.asarray(bounds_value).T
-    # diff = np.fabs(min_b - max_b)
-    # pop_denorm = min_b + pop * diff
-    # pop_denorm_1 = pop_denorm[:,0:10].astype(int)
-    # pop_denorm_2 = np.round(pop_denorm[:,10:], 2)
-    # pop_denorm = np.hstack([pop_denorm_1, pop_denorm_2])
-    # fitness = np.asarray([simulate(ind) for ind in pop_denorm])
-    # print(fitness)
-    # best_idx = np.argmin(fitness)
-    # best = pop_denorm[best_idx]
-    # for i in range(its):
-    #     for j in range(pop_size):
-    #         idxs = [idx for idx in range(pop_size) if idx != j]
-    #         a, b, c = pop[np.random.choice(idxs, 3, replace = False)]
-    #         mutant = np.clip(a + mut * (b - c), 0, 1)
-    #         cross_points = np.random.rand(dimensions) < crossp
-    #         if not np.any(cross_points):
-    #             cross_points[np.random.randint(0, dimensions)] = True
-    #         trial = np.where(cross_points, mutant, pop[j])
-    #         trial_denorm = min_b + trial * diff
-    #         f = simulate(trial_denorm)
-    #         if f < fitness[j]:
-    #             fitness[j] = f
-    #             pop[j] = trial
-    #             if f < fitness[best_idx]:
-    #                 best_idx = j
-    #                 best = trial_denorm
-    # print(best_idx, fitness)
-
-
-    # # best_idx = np.argmin(fitness)
-    # best = pop_denorm[best_idx]
-
-# if __name__ == "__main__":
-#     pygame.init()
-
-#     screen = pygame.display.set_mode((1200, 600))
-#     pygame.display.set_caption("Self Driving Car")
-#     pygame.mouse.set_visible(True)
-#     font = pygame.font.Font(None, 24)
-
-#     CENTER_W = int(pygame.display.Info().current_w / 2)
-#     CENTER_H = int(pygame.display.Info().current_h / 2)
-
-#     # new background surface
-#     background = pygame.Surface(screen.get_size())
-#     background = background.convert_alpha(background)
-#     background.fill((82, 86, 94))
-
-#     # main loop
-#     travel_time = main()
-#     print(travel_time)
-
-#     pygame.quit()
-#     sys.exit(0)

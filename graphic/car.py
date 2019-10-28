@@ -69,10 +69,6 @@ class Car(pygame.sprite.Sprite):
         self.light_deductive = light_deductive.LightDeductive()
         self.impediment_deductive = impediment_deductive.ImpedimentDeductive()
 
-    # def impact(self):
-    #     if self.speed > 0:
-    #         self.speed = self.minspeed
-
     def accelerate(self):
         if self.speed < self.maxspeed:
             self.speed = self.speed + self.acceleration
@@ -82,10 +78,6 @@ class Car(pygame.sprite.Sprite):
 
     def set_speed(self, speed):
         self.speed = speed
-
-    # def set_dir(self, way_dir):
-    #     self.dir = way_dir
-    #     self.image, self.rect = rot_center(self.image_orig, self.rect, self.dir)
 
     def deaccelerate(self):
         if self.speed > self.minspeed:
@@ -154,15 +146,6 @@ class Car(pygame.sprite.Sprite):
     def update_acceleration(self, speed):
         off_set = speed - self.speed
         self.acceleration = off_set/10.0
-        # if speed < 0.1:
-        #     self.speed = speed
-        #     return
-        # if off_set > 0.1:
-        #     self.speed += 0.1
-        # elif off_set < -0.2:
-        #     self.speed -= 0.2
-        # else:
-        #     self.speed = speed
 
     def update_speed(self):
         self.speed += self.acceleration
@@ -183,19 +166,12 @@ class Car(pygame.sprite.Sprite):
                 if stone_hide_view == 1 and stone_pos <= TRAFFIC_LAMP_POS[self.current_lamp_pos]:
                     distance_stone = self.calculate_distance_impediment(stone_status)
                     speed_new = self.impediment_deductive.fuzzy_deductive(distance_stone, angle_tmp)
-                    # print("Distance to Stone: ", distance_stone)
-
-                    # self.speed = speed_new
-                    # self.update_speed(speed_new)
                     self.update_acceleration(speed_new)
                     print("Stone - Speed: ", self.speed)
                     print("--------------------------------------------------------------------------")
                 elif stone_hide_view == 1 and self.current_nav_index > TRAFFIC_LAMP_POS[self.current_lamp_pos]:
                     distance_stone = self.calculate_distance_impediment(stone_status)
                     speed_new = self.impediment_deductive.fuzzy_deductive(distance_stone, angle_tmp)
-                    # print("Distance to Stone: ", distance_stone)
-                    # self.speed = speed_new
-                    # self.update_speed(speed_new)
                     self.update_acceleration(speed_new)
                     print("Stone - Speed: ", self.speed)
                     print("--------------------------------------------------------------------------")
@@ -203,23 +179,9 @@ class Car(pygame.sprite.Sprite):
                     distance_tmp = self.calculate_distance_lamp()
 
                     lamp_status_tmp = traffic_lamp_status[self.current_lamp_pos]
-                    # print("current lamp pos: ", self.current_lamp_pos, ", status: ", lamp_status_tmp)
-                    # print(distance_tmp, " - ", cal_distance_dependencies(distance_tmp))
-                    # print(angle_tmp, " - ", cal_angle_dependencies(angle_tmp))
-                    # print(lamp_status_tmp, " - ", cal_lamp_dependencies(lamp_status_tmp))
-
-                    # light = "red"
-                    # if lamp_status_tmp[1] == 1:
-                    #     light = "green"
-
-                    # print("lamp status: ", light, " - ", lamp_status_tmp[0], "s")
                     self.light_deductive = light_deductive.LightDeductive()
                     speed_new = self.light_deductive.fuzzy_deductive(distance_tmp, lamp_status_tmp, angle_tmp)
-                    # self.speed = speed_new
-                    # self.update_speed(speed_new)
                     self.update_acceleration(speed_new)
-                    #print("Traffic Lamp - Speed: ", self.speed)
-                    #print("--------------------------------------------------------------------------")
             self.update_speed()
 
         else:
