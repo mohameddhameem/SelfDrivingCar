@@ -29,9 +29,9 @@ class Map(pygame.sprite.Sprite):
         self.rect.topleft = self.x - cam_x + 600, self.y - cam_y + 300
 
     def get_workbook(self):
-        data_folder = Path("media")
-        file_to_open = data_folder / 'toa-do.xlsx' # '../media/toa-do.xlsx'
-        return file_to_open
+        #data_folder = Path("../media")
+        #file_to_open = data_folder / 'toa-do.xlsx' # '../media/toa-do.xlsx'
+        return '../media/toa-do.xlsx' #file_to_open
 
     def get_map_navs(self):
         with xlrd.open_workbook(self.get_workbook()) as book:

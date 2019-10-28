@@ -3,11 +3,12 @@ import math
 import pygame
 
 import graphic.maps as maps
-import inference_engine.light_deductive as light_deductive
 from graphic.loader import load_image
 from graphic.maps import MAP_NAVS, TRAFFIC_LAMP_POS
+import inference_engine.light_deductive as light_deductive
 from inference_engine import impediment_deductive
-
+#from fuzzification.fuzzy_dependency import *
+#from fuzzy_rule_base.read_rule import *
 PI = math.pi
 max_a = 0.1
 
@@ -41,8 +42,7 @@ class Car(pygame.sprite.Sprite):
     # init_x, init_y: center of image
     def __init__(self, init_x, init_y, init_dir):
         pygame.sprite.Sprite.__init__(self)
-        #self.image = load_image("car_player.png")
-        self.image = load_image("car_bean.png")
+        self.image = load_image("car_player.png")
         self.rect = self.image.get_rect()
         self.rect_w = self.rect.size[0]
         self.rect_h = self.rect.size[1]
@@ -213,12 +213,13 @@ class Car(pygame.sprite.Sprite):
                     #     light = "green"
 
                     # print("lamp status: ", light, " - ", lamp_status_tmp[0], "s")
+                    self.light_deductive = light_deductive.LightDeductive()
                     speed_new = self.light_deductive.fuzzy_deductive(distance_tmp, lamp_status_tmp, angle_tmp)
                     # self.speed = speed_new
                     # self.update_speed(speed_new)
                     self.update_acceleration(speed_new)
-                    print("Traffic Lamp - Speed: ", self.speed)
-                    print("--------------------------------------------------------------------------")
+                    #print("Traffic Lamp - Speed: ", self.speed)
+                    #print("--------------------------------------------------------------------------")
             self.update_speed()
 
         else:
