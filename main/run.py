@@ -176,24 +176,21 @@ def main(screen, background, font, CENTER_W, CENTER_H):
         counting_time = pygame.time.get_ticks() - start
 
         # # change milliseconds into minutes, seconds, milliseconds
-        # counting_minutes = str(int(counting_time / 60000)).zfill(2)
-        # counting_seconds = str(int((counting_time % 60000) / 1000)).zfill(2)
+        counting_minutes = str(int(counting_time / 60000)).zfill(2)
+        counting_seconds = str(int((counting_time % 60000) / 1000)).zfill(2)
 
-        # counting_string = "%s:%s" % (counting_minutes, counting_seconds)
+        counting_string = "%s:%s" % (counting_minutes, counting_seconds)
+        font_preferences = ["Comic Sans MS"]
 
-        # counting_text = font.render(str(counting_string), 1, (0, 0, 0))
+        text = create_text(str(counting_string), font_preferences, 72, (0, 0, 0))
 
-        # font_preferences = ["Comic Sans MS"]
-
-        # text = create_text(str(counting_string), font_preferences, 72, (0, 0, 0))
-
-        # screen.blit(text, (500, 0))
-        # text_x = create_text('X ->' + str(controlled_car.x), font_preferences, 20, (3, 252, 78))
-        # text_y = create_text('Y ->' + str(controlled_car.y), font_preferences, 20, (3, 252, 78))
-        # text_speed = create_text('Speed ->'+ str(controlled_car.speed), font_preferences, 20, (3, 252, 78))
-        # screen.blit(text_x, (0,0))
-        # screen.blit(text_y, (0, 20))
-        # screen.blit(text_speed, (0, 40))
+        screen.blit(text, (500, 0))
+        text_x = create_text('X ->' + str(controlled_car.x), font_preferences, 20, (3, 252, 78))
+        text_y = create_text('Y ->' + str(controlled_car.y), font_preferences, 20, (3, 252, 78))
+        text_speed = create_text('Speed ->'+ str(controlled_car.speed), font_preferences, 20, (3, 252, 78))
+        screen.blit(text_x, (0,0))
+        screen.blit(text_y, (0, 20))
+        screen.blit(text_speed, (0, 40))
         # ######
 
         pygame.display.flip()
