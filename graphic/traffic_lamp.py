@@ -19,9 +19,9 @@ class TrafficLamp(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         if status is None:
-            status = random.randint(1, 2)
+            status = 1 #random.randint(1, 2)
         if remaining_time is None:
-            remaining_time = random.randint(5, 15) * 60
+            remaining_time = 15 #random.randint(5, 15) * 60
 
         print(status, " - ", int(remaining_time / 60))
         # current status of traffic lamp
@@ -45,9 +45,9 @@ class TrafficLamp(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         if status is None:
-            status = random.randint(1, 2)
+            status = 1 #random.randint(1, 2)
         if remaining_time is None:
-            remaining_time = random.randint(5, 15) * 60
+            remaining_time = 15 #random.randint(5, 15) * 60
 
         print(status, " - ", int(remaining_time / 60))
         # current status of traffic lamp

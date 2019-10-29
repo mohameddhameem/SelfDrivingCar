@@ -206,7 +206,7 @@ def simulate(params):
     if params[9] < params[8]: 
         print("Problem 4!")
         return 10000
-    if params[12] < params[11] or params[13] < params[12]: 
+    if params[11] < params[10] or params[12] < params[11]: 
         print("Problem 5!")
         return 10000
 
@@ -260,14 +260,14 @@ def simulate(params):
     A.loc[8, 'b'] = params[9]
     A.loc[9, 'c'] = params[8]
     A.loc[9, 'd'] = params[9]
-    A.loc[10, 'c'] = params[10] # param[10] - value for stop C -> (0, 2)
-    A.loc[11, 'b'] = params[11] # param[11] - value for slow B, slower A -> (0, 2)
-    A.loc[11, 'c'] = params[12]
-    A.loc[12, 'a'] = params[11]
-    A.loc[12, 'b'] = params[12]
-    A.loc[12, 'c'] = params[13]
-    A.loc[13, 'a'] = params[12]
-    A.loc[13, 'b'] = params[13]
+    #A.loc[10, 'c'] = params[10] # param[10] - value for stop C -> (0, 2)
+    A.loc[11, 'b'] = params[10] # param[11] - value for slow B, slower A -> (0, 2)
+    A.loc[11, 'c'] = params[11]
+    A.loc[12, 'a'] = params[10]
+    A.loc[12, 'b'] = params[11]
+    A.loc[12, 'c'] = params[12]
+    A.loc[13, 'a'] = params[11]
+    A.loc[13, 'b'] = params[12]
     
     A.to_excel(writer, sheet_name = 'fuzzy_values', index = False)
     writer.save()
@@ -326,6 +326,6 @@ def de(fobj, bounds, mut=0.8, crossp=0.7, popsize=20, its=1000):
 
 if __name__ == '__main__':
 
-    bounds_value = [(0, 150), (0, 150), (0, 150), (0, 360), (0, 360), (0, 360), (0, 21), (0, 21), (0, 21), (0, 21),  (0, 2), (0, 2), (0, 2), (0, 2)]
+    bounds_value = [(0, 150), (0, 150), (0, 150), (0, 360), (0, 360), (0, 360), (0, 21), (0, 21), (0, 21), (0, 21), (0, 2), (0, 2), (0, 2)]
     listfinal = list(de(simulate, bounds_value, popsize = 3000, its = 2))
     print(listfinal)

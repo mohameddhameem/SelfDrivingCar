@@ -1,0 +1,1 @@
+set PYTHONPATH=%%PYTHONPATH%%;D:\school\Computational Intelligence II\tian jing ca\SelfDrivingCar
