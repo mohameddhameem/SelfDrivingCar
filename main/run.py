@@ -142,27 +142,32 @@ def main(screen, background, font, CENTER_W, CENTER_H):
 
         ##### Add for timer ~~~
 
-        font_preferences = [
-            "Bizarre-Ass Font Sans Serif",
-            "They definitely dont have this installed Gothic",
-            "Papyrus",
-            "Comic Sans MS"]
+
+        #font_preferences = [
+        #    "Bizarre-Ass Font Sans Serif",
+        #    "They definitely dont have this installed Gothic",
+        #    "Papyrus",
+        #    "Comic Sans MS"]
 
         counting_time = pygame.time.get_ticks() - start
-
+##
         # # change milliseconds into minutes, seconds, milliseconds
         counting_minutes = str(int(counting_time / 60000)).zfill(2)
         counting_seconds = str(int((counting_time % 60000) / 1000)).zfill(2)
-
         counting_string = "%s:%s" % (counting_minutes, counting_seconds)
         font_preferences = ["Comic Sans MS"]
 
-        text = create_text(str(counting_string), font_preferences, 72, (0, 0, 0))
-
+##
+        #text = create_text(str(counting_string), font_preferences, 72, (0, 0, 0))
+        green = (0, 255, 0) 
+        blue = (0, 0, 128) 
+        # attempting a different rendering
+        text = font.render(str(counting_string), True, green, blue)
+##
         screen.blit(text, (500, 0))
-        text_x = create_text('X ->' + str(controlled_car.x), font_preferences, 20, (3, 252, 78))
-        text_y = create_text('Y ->' + str(controlled_car.y), font_preferences, 20, (3, 252, 78))
-        text_speed = create_text('Speed ->'+ str(controlled_car.speed), font_preferences, 20, (3, 252, 78))
+        text_x = font.render('X ->' + str(controlled_car.x), True, green, blue)  #create_text('X ->' + str(controlled_car.x), font_preferences, 20, (3, 252, 78))
+        text_y = font.render('Y ->' + str(controlled_car.y), True, green, blue) #create_text('Y ->' + str(controlled_car.y), font_preferences, 20, (3, 252, 78))
+        text_speed = font.render('Speed ->'+ str(controlled_car.speed), True, green, blue) #create_text('Speed ->'+ str(controlled_car.speed), font_preferences, 20, (3, 252, 78))
         screen.blit(text_x, (0,0))
         screen.blit(text_y, (0, 20))
         screen.blit(text_speed, (0, 40))
@@ -273,7 +278,7 @@ def simulate(params):
         screen = pygame.display.set_mode((1200, 600))
         pygame.display.set_caption("Self Driving Car")
         pygame.mouse.set_visible(True)
-        font = pygame.font.Font(None, 24)
+        font = pygame.font.Font('freesansbold.ttf', 24)
         CENTER_W = int(pygame.display.Info().current_w / 2)
         CENTER_H = int(pygame.display.Info().current_h / 2)
         background = pygame.Surface(screen.get_size())
@@ -282,7 +287,8 @@ def simulate(params):
         travel_time = main(screen, background, font, CENTER_W, CENTER_H)
         pygame.quit()
         return travel_time
-    except:
+    except Exception as err:
+        print("ABUNAI!!!! error!!! ", err)
         try:
             pygame.quit()
             return 10000
