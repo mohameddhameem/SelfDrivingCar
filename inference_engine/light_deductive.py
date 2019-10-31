@@ -1,34 +1,20 @@
 from fuzzification.fuzzy_dependency import *
 from fuzzy_rule_base.read_rule import *
 
-# df_initial_values = read_fuzzy_initial_values()
-# df_fuzzy_values = read_fuzzy_values()
-
-# start, stop, step = query_fuzzy_values(df_initial_values, 'speedo')
-# speedo = np.arange(start, stop, step)
-# #print(df_fuzzy_values)
-# stop   = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_stop', required_cols=3))
-# slow   = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slow', required_cols=3))
-# slower = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slower', required_cols=3))
-# fast   = fuzz.trapmf(speedo,query_fuzzy_individual_values(df_fuzzy_values, 'speedo_fast'))
-
 def speed_type(speedvalue, speedtype, speedo, fast, slower, slow, stop):
     if speedtype == "Fast":
-        #new_arg = fuzz.interp_universe(speedo, fast, speedvalue)[-1]
         tip_fast = np.fmin(fast, speedvalue)
         try:
             res = fuzz.defuzz(speedo, tip_fast, 'centroid')
         except:
             return 0, 0
     elif speedtype == "Slower":
-        #new_arg = fuzz.interp_universe(speedo, slower, speedvalue)[-1]
         tip_slower = np.fmin(slower, speedvalue)
         try:
             res = fuzz.defuzz(speedo, tip_slower, 'centroid')
         except:
             return 0, 0
     elif speedtype == "Slow":
-        #new_arg = fuzz.interp_universe(speedo, slow, speedvalue)[-1]
         tip_slow = np.fmin(slow, speedvalue)
         try:
             res = fuzz.defuzz(speedo, tip_slow, 'centroid')
@@ -36,12 +22,6 @@ def speed_type(speedvalue, speedtype, speedo, fast, slower, slow, stop):
             return 0, 0
     elif speedtype == "Stop":
         return 1e-15, 0
-        #new_arg = fuzz.interp_universe(speedo, stop, speedvalue)[-1]
-        #tip_stop = np.fmin(stop, speedvalue)
-        #try:
-        #    res = fuzz.defuzz(speedo, tip_stop, 'centroid')
-        #except:
-        #    return new_arg, 0
     return 0, res
 
 class LightDeductive:
@@ -56,22 +36,12 @@ class LightDeductive:
 
     # calculate arguments for integral function
     def cal_function_arguments(self, distance_dependency, light_dependency, angle_dependency, speedo, fast, slower, slow, stop):
-        # df_initial_values = read_fuzzy_initial_values()
-        # df_fuzzy_values = read_fuzzy_values()
-        # start, stop, step = query_fuzzy_values(df_initial_values, 'speedo')
-        # speedo = np.arange(start, stop, step)
-        # stop   = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_stop', required_cols=3))
-        # slow   = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slow', required_cols=3))
-        # slower = fuzz.trimf(speedo, query_fuzzy_individual_values(df_fuzzy_values, 'speedo_slower', required_cols=3))
-        # fast   = fuzz.trapmf(speedo,query_fuzzy_individual_values(df_fuzzy_values, 'speedo_fast'))
         for rule in self.rules:
             if distance_dependency[0] == rule[0] and light_dependency[0] == rule[1] and angle_dependency[0] == rule[2]:
                 dependencies = [distance_dependency[1], light_dependency[1], angle_dependency[1]]
                 min_arg = min(dependencies)
                 label = rule[3]
-                #new_arguments = []
                 _, res_1 = speed_type(min_arg, label, speedo, fast, slower, slow, stop)
-                #new_arguments.append(new_arg_1)
                 return [0, "Stop", min_arg], res_1
 
         return [0, "Stop", 1], 0

@@ -7,8 +7,6 @@ from graphic.loader import load_image
 from graphic.maps import MAP_NAVS, TRAFFIC_LAMP_POS
 import inference_engine.light_deductive as light_deductive
 from inference_engine import impediment_deductive
-#from fuzzification.fuzzy_dependency import *
-#from fuzzy_rule_base.read_rule import *
 PI = math.pi
 max_a = 0.1
 
@@ -121,7 +119,6 @@ class Car(pygame.sprite.Sprite):
     def calculator_car_angle(self):
         current_dir = self.dir
         way_dir = self.find_way_direction()
-        # print(current_dir, " :: ", way_dir)
         return abs(current_dir - way_dir)
 
     def update_map_nav_index(self):
@@ -152,13 +149,11 @@ class Car(pygame.sprite.Sprite):
 
     def update(self, last_x, last_y, traffic_lamp_status, stone_status, flag):
         self.update_map_nav_index()
-        # print("Current index: ", self.current_nav_index)
         if self.current_nav_index < maps.FINISH_INDEX:
             way_dir = self.find_way_direction()
             self.change_dir(way_dir)
 
             if (flag % 10) == 0:
-                # distance_stone = self.calculate_distance_impediment(stone_status)
                 angle_tmp = self.calculator_car_angle()
 
                 stone_hide_view = stone_status[0]

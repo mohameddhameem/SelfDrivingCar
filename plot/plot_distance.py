@@ -1,8 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-
-# distance dependency
 # distance dependency
 def distance_near_dependency(distance):
     if 0 <= distance <= 70:

@@ -58,21 +58,3 @@ class Map(pygame.sprite.Sprite):
 
             for i in range(1, len(x_coordinate)):
                 TRAFFIC_LAMP_COORDINATES.append((x_coordinate[i], y_coordinate[i], direction[i], index[i]))
-
-    # def get_traffic_lamp_pos(self):
-    #     with xlrd.open_workbook('media/toa-do.xlsx') as book:
-    #         sheet = book.sheet_by_index(self.map_number + 2)
-    #
-    #         pos_tmp = [x for x in sheet.col_values(1)]
-    #         for i in range(1, len(pos_tmp)):
-    #             TRAFFIC_LAMP_POS.append(int(pos_tmp[i]))
-    #         print("TRAFFIC LAMP POS: ", TRAFFIC_LAMP_POS)
-    #
-    #         sheet2 = book.sheet_by_index(self.map_number + 5)
-    #         x_coordinate = [x for x in sheet2.col_values(1)]
-    #         y_coordinate = [y for y in sheet2.col_values(2)]
-    #         direction = [direction for direction in sheet2.col_values(3)]
-    #         index = [index for index in sheet2.col_values(4)]
-    #
-    #         for i in range(1, len(x_coordinate)):
-    #             TRAFFIC_LAMP_COORDINATES.append((x_coordinate[i], y_coordinate[i], direction[i], index[i]))
